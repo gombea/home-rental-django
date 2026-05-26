@@ -1,0 +1,195 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  #active {
+    border-radius: 50%;
+  }
+
+  #inactive {
+    border-radius: 50%;
+  }
+  #active:hover {
+    cursor: default !important;
+  }
+  #inactive:hover {
+    cursor: default !important;
+  }
+  .table-responsive{
+    font-size:11px;
+  }
+  .material-symbols-outlined
+  {
+    font-size:14px;
+  }
+    td{
+    padding:0px;
+    }
+    .password{
+        display:none;
+    }
+    .text{
+      display:block;
+    }
+    .green-row{
+      color:white;
+      background-color:green!important;
+    }
+    .red-row{
+      color:white;
+      background-color:red!important;
+    }
+    .head-row{
+      color:white;
+      background-color:#165d5d!important;
+    }
+</style>
+
+        <!-- Header Start -->
+        <div class="container-fluid header bg-white p-0">
+            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
+                <div class="col-md-6 p-5 mt-lg-5">
+                    <h1 class="display-5 animated fadeIn mb-4">Find The <span class="text-primary">Perfect Flat</span> To Rent With Your Family</h1>
+                    <a href="" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Get Started</a>
+                </div>
+                <div class="col-md-6 animated fadeIn">
+                    <div class="owl-carousel header-carousel">
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src="{% static 'img/rep2.jpg' %}" alt="">
+                        </div>
+                        <div class="owl-carousel-item">
+                            <img class="img-fluid" src="{% static 'img/rep3.jpg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+
+
+        <!-- Search Start -->
+        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+            <div class="container">
+                <form action="/apartment_search/" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <div class="row g-2">
+                        <div class="col-md-10">
+                            <div class="row g-2">
+                                <div class="col-md-4">
+                                    <select name="atype" class="form-select border-0 py-3">
+                                        <option value="All">All Types</option>
+                                        <option value="1 BHK">1 BHK</option>
+                                        <option value="2 BHK">2 BHK</option>
+                                        <option value="2 RK">2 RK</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="gender" class="form-select border-0 py-3">
+                                        <option value="All">All Genders</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="furnish" class="form-select border-0 py-3">
+                                        <option value="All">All Types</option>
+                                        <option value="Full Furnished">Full Furnished</option>
+                                        <option value="Semi Furnished">Semi Furnished</option>
+                                        <option value="Unfurnished">Unfurnished</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-dark border-0 w-100 py-3" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Search End -->
+
+        <!-- Property List Start -->
+            <div class="container-xxl py-5">
+            <div class="container">
+                <div class="row g-0 gx-5 align-items-end">
+                    <div class="col-lg-6">
+                        <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
+                            <h1 class="mb-3">Flat Rent</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane fade show p-0 active">
+                        <div class="row g-4">
+                            {% for i in apart %}
+                            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="property-item rounded overflow-hidden">
+                                    <div class="position-relative overflow-hidden">
+                                        <img class="img-fluid" src="{{i.pic1.url}}" style="height:280px" alt="">
+                                        {% if request.user.is_authenticated %}
+                                        {% if request.user.is_staff %}
+                                            <div></div>
+                                        {% elif request.user.owner_set.all %}
+                                            <div></div>
+                                        {% else %}
+                                            <a href="/user_apartment_detail/{{i.id}}/"><div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Book Room</div></a>
+                                        {% endif %}
+                                        {% else %}
+                                            <div></div>
+                                        {% endif %}
+                                        <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Appartment</div>
+                                    </div>
+                                    <div class="p-4 pb-0">
+                                        <h5 class="text-primary mb-3">₹ {{i.rent}}+ ₹ {{i.ebill}}</h5>
+                                        <h4 class="d-block h5 mb-1">{{i.name}}</h4>
+                                        <p><i class="fas fa-map-marker-alt text-primary me-0"></i>{{i.address}}, {{i.city}}, {{i.district}}, India</p>
+                                        <div style="margin-top:-13px"><span class="d-block float-start mb-3 text-primary">Facility: <b> {{i.extra}}</b></span></div>
+                                    </div><br>
+                                    <div class="p-4 pb-0">
+                                        <h5 class="text-danger mb-1">Owner Details:</h5>
+                                        <p><i class="fas fa-user text-primary me-1"></i> {{i.owner.user.first_name}}</p>
+                                        <div><span class="d-block float-start mb-0 text-primary px-2"><i class="fas fa-phone text-primary me-1"></i> Ph: </span> <b>
+                                            <span id="email-{{forloop.counter}}" class="password">{{i.owner.mobile}}</span>
+                                            <button type="button" class="btn btn-info" id="email-btn-{{forloop.counter}}" onclick="togglePassword('email-{{forloop.counter}}', this.id)"><i class="fa fa-eye"></i></button>
+                                        </b></div>
+                                    </div><br>
+
+                                    <div class="col-md-12 d-flex border-top pb-0">
+                                        <small class="flex-fill text-center border-end py-2"><b><i class="fas fa-ruler-combined text-primary me-2"></i>{{i.furnish}}</b></small>
+                                        <small class="flex-fill text-center border-end py-2"><b><i class="fa fa-home text-primary me-2"></i>{{i.atype}}</b></small>
+                                        <small class="flex-fill text-center py-2"><b><i class="fa fa-user text-primary me-2"></i>{{i.gender}}</b></small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Property List End -->
+
+<script>
+    function togglePassword(element_id, btnId){
+      var elementData = document.getElementById(element_id);
+      var elementBtn = document.getElementById(btnId);
+      console.log(elementData.classList.contains("password"))
+      if(elementData.classList.contains("password")){
+        elementData.classList.remove("password");
+        elementData.classList.add("text");
+        elementBtn.children[0].classList.add("fa-eye-slash");
+        elementBtn.children[0].classList.remove("fa-eye");
+      }
+      else{
+        elementData.classList.remove("text");
+        elementData.classList.add("password");
+        elementBtn.children[0].classList.remove("fa-eye-slash");
+        elementBtn.children[0].classList.add("fa-eye");
+      }
+    }
+  </script>
+
+{% endblock %}

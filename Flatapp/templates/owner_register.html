@@ -1,0 +1,97 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block body %}
+
+        <!-- Header Start -->
+        <div class="container-fluid header bg-white p-0">
+            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
+                <div class="col-md-6 p-5 mt-lg-5">
+                    <h1 class="display-5 animated fadeIn mb-4">Owner Sign Up</h1>
+                        <nav aria-label="breadcrumb animated fadeIn">
+                        <ol class="breadcrumb text-uppercase">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item text-body active" aria-current="page">User Sign Up</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-md-6 animated fadeIn">
+                    <img class="img-fluid" src="{% static 'img/header.jpg' %}" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+
+        <!-- Form Start -->
+        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+            <div class="container">
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-2 justify-content-center">
+                        <div class="col-md-12">
+                            <h4 class="text-center" style="color:white">Owner Registration Form</h4>
+                            <br>
+                            <div class="row g-2 justify-content-center">
+                                <div class="col-md-4">
+                                    <label for="fullname" style="color:white">Full Name:</label>
+                                    <input type="text" id="fullname" name="first_name" class="form-control border-0 py-3" placeholder="Full Name" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="address" style="color:white">Address:</label>
+                                    <input type="text" id="address" name="address" class="form-control border-0 py-3" placeholder="Address" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="mobilenumber" style="color:white">Mobile Number:</label>
+                                    <input type="number" id="mobilenumber" name="mobile" step="any" class="form-control border-0 py-3" placeholder="Mobile Number" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="email" style="color:white">Email Id:</label>
+                                    <input type="email" id="email" name="email" class="form-control border-0 py-3" placeholder="Email Id" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="password" style="color:white">Password:</label>
+                                    <input type="password" id="password" name="password" class="form-control border-0 py-3" placeholder="Password" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="electricityBillImage" style="color:white">Upload Electricity Bill Image:</label>
+                                    <input type="file" name="elect_img" id="electricityBillImage" class="form-control border-0 py-3" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="securityquestion" style="color:white">Security Question:</label>
+                                    <select id="securityquestion" name="sec_question" class="form-select border-0 py-3" required>
+                                        <option selected>Select Security Question</option>
+                                        <option value="What is your nick name ?">What is your nick name ?</option>
+                                        <option value="Which is your favorite pet name ?">Which is your favorite pet name ?</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="answer" style="color:white">Answer:</label>
+                                    <input type="text" id="answer" name="answer" class="form-control border-0 py-3" placeholder="Answer" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="adharCardPhoto" style="color:white">Upload Adhar Image:</label>
+                                    <input type="file" id="adharCardPhoto" name="aadhar_img" class="form-control border-0 py-3" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="text-white py-3" style="font-size:18px">Gender</label><br>
+                                        <input type="radio" name="gender" value="Male" class="border-0 py-3" required>
+                                        <label class="text-white" style="font-size:18px">Male</label>
+                                        <input type="radio" name="gender" value="Female" class="border-0 py-3">
+                                        <label class="text-white" style="font-size:18px">Female</label>
+                                        <input type="radio" name="gender" value="NA" class="border-0 py-3">
+                                        <label class="text-white" style="font-size:18px">Prefer not to say</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-dark border-0 w-100 py-3">Sign Up</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Form End -->
+
+
+{% endblock %}
